@@ -7,7 +7,7 @@ export const config = {
     publicKey: import.meta.env.VITE_STRIPE_PUBLIC_KEY || "",
   },
   api: {
-    baseUrl: import.meta.env.VITE_API_BASE_URL || "https://digital-flex.vercel.app",
+    baseUrl: import.meta.env.VITE_API_BASE_URL || "https://digitalflex.onrender.com",
   },
   app: {
     name: "Digital Collectibles Marketplace",

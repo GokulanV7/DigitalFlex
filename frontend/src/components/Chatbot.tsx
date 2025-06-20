@@ -27,8 +27,8 @@ const Chatbot = () => {
     setMessages(prev => [...prev, newMessage]);
 
     try {
-      console.log('Fetching from: https://digital-flex.vercel.app/chat');
-      const response = await fetch('https://digital-flex.vercel.app/chat', {
+      console.log('Fetching from: https://digitalflex.onrender.com/chat');
+      const response = await fetch('https://digitalflex.onrender.com/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
