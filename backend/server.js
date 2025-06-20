@@ -27,7 +27,7 @@ app.post('/chat', async (req, res) => {
     const response = await axios.post(
       'https://api.groq.com/openai/v1/chat/completions',
       {
-        model: 'deepseek-r1-distill-llama-70b',
+        model: 'gemma2-9b-it',
         messages: [
           { role: 'system', content: 'You are a trade assistant. Help users with trading strategies, market analysis, and collectible valuation.' },
           { role: 'user', content: message }
