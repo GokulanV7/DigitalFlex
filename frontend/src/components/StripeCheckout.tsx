@@ -95,6 +95,10 @@ const StripeCheckout = () => {
 
       const { sessionId } = await response.json();
 
+      // Set payment details in Redux store before redirecting
+      dispatch(setPaymentSuccess(false)); // Reset to false initially
+      dispatch(setPaymentDetails(item));
+
       // Redirect to Stripe Checkout
       const result = await stripe.redirectToCheckout({ sessionId });
 
@@ -103,11 +107,6 @@ const StripeCheckout = () => {
       }
 
       setIsProcessing(false);
-      // Note: Stripe will redirect to success_url after payment, but we set the success state here
-      // to briefly show a success UI before redirection occurs. In a real implementation, consider
-      // checking session status on return or using webhooks to confirm payment success.
-      dispatch(setPaymentSuccess(true));
-      dispatch(setPaymentDetails(item));
       
       // Simulate saving purchase data to Supabase
       try {

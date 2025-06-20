@@ -75,7 +75,7 @@ app.post('/create-checkout-session', async (req, res) => {
   console.log('Received cancelUrl:', cancelUrl);
 
   // Force URLs to use the Render domain
-  const finalSuccessUrl = `https://digitalflex.onrender.com/marketplace?payment=success&item=${encodeURIComponent(item.name)}`;
+  const finalSuccessUrl = `https://digitalflex.onrender.com/success?session_id={CHECKOUT_SESSION_ID}`;
   const finalCancelUrl = `https://digitalflex.onrender.com/marketplace?payment=cancelled`;
 
   console.log('Final successUrl:', finalSuccessUrl);
@@ -111,6 +111,37 @@ app.post('/create-checkout-session', async (req, res) => {
     console.error('Stripe Error Details:', JSON.stringify(error, null, 2));
     res.status(500).json({ error: `Failed to create checkout session: ${error.message}` });
   }
+});
+
+// Stripe Webhook Endpoint to handle payment events
+app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || 'your_webhook_secret_here';
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+  } catch (err) {
+    console.error('Webhook signature verification failed:', err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  // Handle the event
+  switch (event.type) {
+    case 'checkout.session.completed':
+      const session = event.data.object;
+      console.log('Checkout Session completed:', session.id);
+      // Here you can update your database or store payment confirmation
+      // For simplicity, we'll log the event
+      console.log('Payment successful for:', session.metadata.item_name);
+      break;
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  // Return a response to acknowledge receipt of the event
+  res.json({ received: true });
 });
 
 
