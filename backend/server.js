@@ -4,34 +4,28 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-// Environment variables
 const port = process.env.PORT || 3002;
 
-// Initialize Stripe with the secret key from environment variables
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY || 'your_stripe_secret_key_here');
 
-
-// Middleware
 app.use(cors({
-  origin: '*', // Allow requests from any origin
+  origin: '*',
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 
-// Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is up and running' });
 });
 
 const axios = require('axios');
 
-// Endpoint for chat with Groq integration
 app.post('/chat', async (req, res) => {
   console.log('Received request to /chat endpoint');
   const { message } = req.body;
   const apiKey = process.env.GROQ_API_KEY || 'your_groq_api_key_here';
-  
+
   try {
     const response = await axios.post(
       'https://api.groq.com/openai/v1/chat/completions',
@@ -67,16 +61,11 @@ app.post('/chat', async (req, res) => {
   }
 });
 
-// Endpoint to create a Checkout Session
 app.post('/create-checkout-session', async (req, res) => {
-  const { item, successUrl, cancelUrl } = req.body;
+  const { item } = req.body;
 
-  console.log('Received successUrl:', successUrl);
-  console.log('Received cancelUrl:', cancelUrl);
-
-  // Force URLs to use the Render domain
-  const finalSuccessUrl = `https://digitalflex.onrender.com/success?session_id={CHECKOUT_SESSION_ID}`;
-  const finalCancelUrl = `https://digitalflex.onrender.com/marketplace?payment=cancelled`;
+  const finalSuccessUrl = 'https://digitalflex.vercel.app/marketplace?session_id={CHECKOUT_SESSION_ID}';
+  const finalCancelUrl = 'https://digitalflex.vercel.app/marketplace?payment=cancelled';
 
   console.log('Final successUrl:', finalSuccessUrl);
   console.log('Final cancelUrl:', finalCancelUrl);
@@ -91,7 +80,7 @@ app.post('/create-checkout-session', async (req, res) => {
             product_data: {
               name: item.name,
             },
-            unit_amount: Math.max(50, Math.round(item.price * 100)), // Convert to cents, ensure minimum of 50 cents
+            unit_amount: Math.max(50, Math.round(item.price * 100)),
           },
           quantity: 1,
         },
@@ -108,12 +97,10 @@ app.post('/create-checkout-session', async (req, res) => {
     res.json({ sessionId: session.id });
   } catch (error) {
     console.error('Error creating checkout session:', error);
-    console.error('Stripe Error Details:', JSON.stringify(error, null, 2));
     res.status(500).json({ error: `Failed to create checkout session: ${error.message}` });
   }
 });
 
-// Stripe Webhook Endpoint to handle payment events
 app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (req, res) => {
   const sig = req.headers['stripe-signature'];
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || 'your_webhook_secret_here';
@@ -127,25 +114,19 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (re
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  // Handle the event
   switch (event.type) {
     case 'checkout.session.completed':
       const session = event.data.object;
       console.log('Checkout Session completed:', session.id);
-      // Here you can update your database or store payment confirmation
-      // For simplicity, we'll log the event
       console.log('Payment successful for:', session.metadata.item_name);
       break;
     default:
       console.log(`Unhandled event type ${event.type}`);
   }
 
-  // Return a response to acknowledge receipt of the event
   res.json({ received: true });
 });
 
-
-// Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

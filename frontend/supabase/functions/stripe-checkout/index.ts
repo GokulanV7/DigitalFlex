@@ -42,7 +42,7 @@ serve(async (req) => {
         },
       ],
       mode: "payment",
-success_url: `https://digitalflex.vercel.app/success?session_id={CHECKOUT_SESSION_ID}`,
+success_url: `https://digitalflex.vercel.app/marketplace?session_id={CHECKOUT_SESSION_ID}`,
 cancel_url: `https://digitalflex.vercel.app/cancel`,
       metadata: {
         collectible_id: item.id,
