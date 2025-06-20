@@ -64,8 +64,8 @@ app.post('/chat', async (req, res) => {
 app.post('/create-checkout-session', async (req, res) => {
   const { item } = req.body;
 
-  const finalSuccessUrl = 'https://digitalflex.vercel.app/marketplace?session_id={CHECKOUT_SESSION_ID}';
-  const finalCancelUrl = 'https://digitalflex.vercel.app/marketplace?payment=cancelled';
+  const finalSuccessUrl = 'https://digital-flex.vercel.app/marketplace?session_id={CHECKOUT_SESSION_ID}';
+  const finalCancelUrl = 'https://digital-flex.vercel.app/marketplace?payment=cancelled';
 
   console.log('Final successUrl:', finalSuccessUrl);
   console.log('Final cancelUrl:', finalCancelUrl);
