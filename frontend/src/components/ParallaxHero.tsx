@@ -1,9 +1,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Sparkles, TrendingUp } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const ParallaxHero = () => {
   const [scrollY, setScrollY] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -73,12 +75,12 @@ const ParallaxHero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="group flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
+              <button onClick={() => navigate('/create')} className="group flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
                 <span>Start Creating</span>
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
               
-              <button className="flex items-center justify-center space-x-2 bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:bg-slate-700/50 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300">
+              <button onClick={() => navigate('/marketplace')} className="flex items-center justify-center space-x-2 bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:bg-slate-700/50 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300">
                 <TrendingUp size={20} />
                 <span>Explore Market</span>
               </button>

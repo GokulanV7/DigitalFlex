@@ -79,13 +79,29 @@ const Index = () => {
                 Join thousands of creators and collectors in the premier digital collectibles ecosystem. 
                 Create, trade, and own unique digital assets with blockchain security.
               </p>
-              <button
-                onClick={() => navigate('/auth')}
-                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 mx-auto"
-              >
-                <span>Get Started Now</span>
-                <ArrowRight size={20} />
-              </button>
+              <div className="flex flex-col md:flex-row gap-4 justify-center mx-auto">
+                <button
+                  onClick={() => navigate('/auth')}
+                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2"
+                >
+                  <span>Get Started Now</span>
+                  <ArrowRight size={20} />
+                </button>
+                <button
+                  onClick={() => navigate('/create')}
+                  className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2"
+                >
+                  <span>Start Creating</span>
+                  <Zap size={20} />
+                </button>
+                <button
+                  onClick={() => navigate('/marketplace')}
+                  className="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2"
+                >
+                  <span>Explore Market</span>
+                  <Shield size={20} />
+                </button>
+              </div>
             </div>
           </section>
         )}
