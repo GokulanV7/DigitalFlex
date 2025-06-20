@@ -74,9 +74,9 @@ app.post('/create-checkout-session', async (req, res) => {
   console.log('Received successUrl:', successUrl);
   console.log('Received cancelUrl:', cancelUrl);
 
-  // Use provided URLs or fallback to marketplace
-  const finalSuccessUrl = successUrl || `${new URL(req.headers.origin || 'http://localhost:3000').origin}/marketplace?payment=success&item=${encodeURIComponent(item.name)}`;
-  const finalCancelUrl = cancelUrl || `${new URL(req.headers.origin || 'http://localhost:3000').origin}/marketplace?payment=cancelled`;
+  // Force URLs to use the Render domain
+  const finalSuccessUrl = `https://digitalflex.onrender.com/marketplace?payment=success&item=${encodeURIComponent(item.name)}`;
+  const finalCancelUrl = `https://digitalflex.onrender.com/marketplace?payment=cancelled`;
 
   console.log('Final successUrl:', finalSuccessUrl);
   console.log('Final cancelUrl:', finalCancelUrl);
