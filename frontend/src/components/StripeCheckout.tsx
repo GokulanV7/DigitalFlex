@@ -77,10 +77,10 @@ const StripeCheckout = () => {
       }
       console.log('Initiating payment process for:', item.name);
 
-      // Send request to backend to create a Checkout Session
-      const successUrl = `${window.location.origin}/marketplace?payment=success&item=${encodeURIComponent(item.name)}`;
-      const cancelUrl = `${window.location.origin}/marketplace?payment=cancelled`;
-      const response = await fetch('https://digitalflex.onrender.com/create-checkout-session', {
+      // Send request to Vercel Serverless Function to create a Checkout Session
+      const successUrl = `https://digital-flex.vercel.app/marketplace?payment=success&item=${encodeURIComponent(item.name)}`;
+      const cancelUrl = `https://digital-flex.vercel.app/marketplace?payment=cancelled`;
+      const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

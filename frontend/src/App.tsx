@@ -12,6 +12,7 @@ import Trading from "./pages/Trading";
 import Create from "./pages/Create";
 import NotFound from "./pages/NotFound";
 import Success from "./pages/Success";
+import Cancel from "./pages/Cancel";
 import Chatbot from "./components/Chatbot";
 import PaymentSuccess from './components/PaymentSuccess';
 
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/trading" element={<Trading />} />
             <Route path="/create" element={<Create />} />
             <Route path="/success" element={<Success />} />
+            <Route path="/cancel" element={<Cancel />} />
             <Route path="/marketplace/success" element={<PaymentSuccess />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

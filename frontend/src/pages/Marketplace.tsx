@@ -40,11 +40,21 @@ const Marketplace = () => {
     // Check for payment success redirect
     const urlParams = new URLSearchParams(location.search);
     const paymentSuccess = urlParams.get('payment');
+    const sessionId = urlParams.get('session_id');
     const tradeSuccess = urlParams.get('trade');
     const itemName = urlParams.get('item');
     const tradeType = urlParams.get('type');
 
-    if (paymentSuccess === 'success') {
+    if (sessionId) {
+      toast({
+        title: "🎉 Payment Received!",
+        description: `Payment successful! Session ID: ${sessionId}`,
+        duration: 8000,
+        className: "bg-green-500/90 text-white border-green-400"
+      });
+      // Clear the URL parameters after showing the message
+      window.history.replaceState({}, document.title, location.pathname);
+    } else if (paymentSuccess === 'success') {
       toast({
         title: "🎉 Purchase Successful!",
         description: itemName 
