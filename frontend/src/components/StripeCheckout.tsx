@@ -80,7 +80,7 @@ const StripeCheckout = () => {
       // Send request to backend to create a Checkout Session
       const successUrl = `${window.location.origin}/marketplace?payment=success&item=${encodeURIComponent(item.name)}`;
       const cancelUrl = `${window.location.origin}/marketplace?payment=cancelled`;
-      const response = await fetch('http://localhost:3002/create-checkout-session', {
+      const response = await fetch('https://digital-flex.vercel.app/create-checkout-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -329,5 +329,4 @@ const StripeCheckout = () => {
   );
 };
 
-export default StripeCheckout;
 export default StripeCheckout;

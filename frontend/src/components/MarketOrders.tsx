@@ -216,7 +216,7 @@ const MarketOrders = ({ collectibleId }: { collectibleId?: string }) => {
         console.log('Sending successUrl:', successUrl);
         console.log('Sending cancelUrl:', cancelUrl);
         
-        const response = await fetch('http://localhost:3002/create-checkout-session', {
+        const response = await fetch('https://digital-flex.vercel.app/create-checkout-session', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

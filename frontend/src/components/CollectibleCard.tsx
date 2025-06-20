@@ -52,7 +52,7 @@ const CollectibleCard: React.FC<CollectibleCardProps> = ({ collectible, showActi
       const successUrl = `${window.location.origin}/marketplace?payment=success&item=${encodeURIComponent(collectible.title)}`;
       const cancelUrl = `${window.location.origin}/marketplace`;
 
-      const response = await fetch('http://localhost:3002/create-checkout-session', {
+      const response = await fetch('https://digital-flex.vercel.app/create-checkout-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
